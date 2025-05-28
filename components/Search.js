@@ -2,38 +2,52 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { supabase } from '../supabaseClient'; // Adjust path if needed
 import { fetchProductAndServices } from '../backend/server';
+import { setSelectedItem } from '../utils/SelectionStore';
 
+let debounceTimer;
 
 export default function SearchScreen() {
   const router = useRouter();
   const [search, setSearch] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('All');
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const filters = ['All', 'Products', 'Stores', 'Services'];
 
   const imageMap = {
-  'image.png': require('../assets/image.png'),
-  // Add other images here
-};
+    'image.png': require('../assets/image.png'),
+  };
 
+  const loadData = async (searchTerm = '') => {
+    setLoading(true);
+    const results = await fetchProductAndServices(searchTerm);
+    setData(results);
+    setLoading(false);
+  };
+
+  // Load once on mount
   useEffect(() => {
-    const loadData = async () => {
-      const results = await fetchProductAndServices();
-      setData(results);
-      setLoading(false);
-    };
-
     loadData();
   }, []);
 
-  const filteredData = data.filter(item =>
-    (selectedFilter === 'All' || item.category.toLowerCase() === selectedFilter.toLowerCase()) &&
-    item.name.toLowerCase().includes(search.toLowerCase())
-  );
+  // Dynamic search (debounced)
+  useEffect(() => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      loadData(search);
+    }, 300); // delay to avoid frequent calls
+    return () => clearTimeout(debounceTimer);
+  }, [search]);
+
+  const filteredData = data.filter(item => {
+    if (selectedFilter === 'All') return true;
+    if (selectedFilter === 'Products') return item.type === 'Product';
+    if (selectedFilter === 'Stores') return item.type === 'Stall';
+    if (selectedFilter === 'Services') return item.category.toLowerCase().includes('service');
+    return true;
+  });
 
   return (
     <View style={styles.container}>
@@ -86,7 +100,10 @@ export default function SearchScreen() {
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.itemRow}
-            onPress={() => router.push('/map')}
+          onPress={() => {
+            setSelectedItem(item);
+            router.push('/map'); // continue navigation
+          }}
           >
             <Image source={imageMap[item.image]} style={styles.itemImage} />
             <View style={styles.itemInfo}>
@@ -101,6 +118,7 @@ export default function SearchScreen() {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

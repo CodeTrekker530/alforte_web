@@ -95,7 +95,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top: 50,
+    top: 49,
   },
   scrollView: {
     flex: 1,
@@ -116,8 +116,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'rgba(255,255,255,0.95)',
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+    paddingHorizontal: 15,
     borderRadius: 10,
     elevation: 5,
     shadowColor: '#000',
@@ -127,30 +126,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#000',  // black border
   },
-  filterButton: {
-    paddingHorizontal: 11,
-    paddingVertical: 11,
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#000' ,
-    borderRadius: 8,
-    marginRight: 5,
-  },
-  filterText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
     searchBar: {
     flexShrink: 1, // prevent overflowing by allowing shrink
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
-    paddingHorizontal: 10,
+    paddingHorizontal: 0,
     paddingVertical: 4,
     borderRadius: 5,
-    borderColor: '#ccc',
+    borderColor: '#fff',
     borderWidth: 1,
-    marginLeft: 5, // adds spacing from the filter button
     },
   logo: {
     width: 40,
@@ -163,12 +148,12 @@ const styles = StyleSheet.create({
     color: '#000',
     },
   searchIcon: {
-    marginLeft: 10,
-    marginRight: 5,
+    marginLeft: 15,
+    marginRight: 10,
   },
   floatingButtons: {
   position: 'absolute',
-  top: 90, // just below topOverlay
+  top: 80, // just below topOverlay
   right: 10,
   zIndex: 1,
   justifyContent: 'center',

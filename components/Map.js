@@ -14,6 +14,10 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import MapSvg from '../assets/map.svg'; // adjust path if needed
+import { useSelectionStore } from '../utils/SelectionStore';
+
+const selectedItem = useSelectionStore(state => state.selectedItem);
+console.log('[Map.js] selectedItem:', selectedItem);
 
 const window = Dimensions.get('window');
 const drawerHeight = window.height * 0.6;
@@ -186,7 +190,7 @@ const closeAnim = Animated.timing(panY, {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top: 50,
+    top: 49,
   },
   scrollView: {
     flex: 1,
@@ -198,6 +202,15 @@ const styles = StyleSheet.create({
     width: window.width * 4,
     height: window.height * 1,
   },
+  filterButton: {
+    paddingHorizontal: 11,
+    paddingVertical: 11,
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 8,
+    marginRight: 5,
+  },
   topOverlay: {
     position: 'absolute',
     top: 10,
@@ -208,7 +221,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(255,255,255,0.95)',
     paddingHorizontal: 10,
-    paddingVertical: 8,
     borderRadius: 10,
     elevation: 5,
     shadowColor: '#000',
@@ -216,29 +228,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: '#000',  // black border
   },
-  filterButton: {
-    paddingHorizontal: 11,
-    paddingVertical: 11,
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 8,
-    marginRight: 5,
-  },
-  searchBar: {
-    flexShrink: 1,
+    searchBar: {
+    flexShrink: 1, // prevent overflowing by allowing shrink
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
-    paddingHorizontal: 10,
+    paddingHorizontal: 0,
     paddingVertical: 4,
     borderRadius: 5,
-    borderColor: '#ccc',
+    borderColor: '#fff',
     borderWidth: 1,
-    marginLeft: 5,
-  },
+    },
   logo: {
     width: 40,
     height: 40,
@@ -251,7 +253,7 @@ const styles = StyleSheet.create({
   },
   floatingButtons: {
     position: 'absolute',
-    top: 90,
+    top: 80,
     right: 10,
     zIndex: 1,
     justifyContent: 'center',
