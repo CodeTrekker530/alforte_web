@@ -1,44 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { supabase } from '../supabaseClient'; // Adjust path if needed
+import { fetchProductAndServices } from '../backend/server';
 
-const mockData = [
-  {
-    id: '1',
-    type: 'Product',
-    name: 'Banana',
-    location: 'Ground Floor, 3rd Floor',
-    price: '₱50 – ₱150',
-    image: require('../assets/banana.jpg'),
-  },
-  {
-    id: '2',
-    type: 'Store',
-    name: 'Buenafe Store',
-    location: '3rd Floor',
-    price: '',
-    image: require('../assets/store.jpg'),
-  },
-  {
-    id: '3',
-    type: 'Service',
-    name: 'Barber Shop',
-    location: 'Ground Floor',
-    price: '₱50 – ₱150',
-    image: require('../assets/barber.png'),
-  },
-];
 
 export default function SearchScreen() {
   const router = useRouter();
   const [search, setSearch] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('All');
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const filters = ['All', 'Products', 'Stores', 'Services'];
 
-  const filteredData = mockData.filter(item =>
-    selectedFilter === 'All' || item.type === selectedFilter.slice(0, -1)
+  const imageMap = {
+  'image.png': require('../assets/image.png'),
+  // Add other images here
+};
+
+  useEffect(() => {
+    const loadData = async () => {
+      const results = await fetchProductAndServices();
+      setData(results);
+      setLoading(false);
+    };
+
+    loadData();
+  }, []);
+
+  const filteredData = data.filter(item =>
+    (selectedFilter === 'All' || item.category.toLowerCase() === selectedFilter.toLowerCase()) &&
+    item.name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -90,17 +84,17 @@ export default function SearchScreen() {
         data={filteredData}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
-        <TouchableOpacity
+          <TouchableOpacity
             style={styles.itemRow}
             onPress={() => router.push('/map')}
-        >
-            <Image source={item.image} style={styles.itemImage} />
+          >
+            <Image source={imageMap[item.image]} style={styles.itemImage} />
             <View style={styles.itemInfo}>
-            <Text style={styles.itemName}>{item.name}</Text>
-            <Text style={styles.itemLocation}>{item.location}</Text>
+              <Text style={styles.itemName}>{item.name}</Text>
+              <Text style={styles.itemCategory}>{item.category}</Text>
             </View>
             <Text style={styles.itemPrice}>{item.price}</Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
         )}
         contentContainerStyle={{ paddingBottom: 20 }}
       />
@@ -181,7 +175,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-  itemLocation: {
+  itemCategory: {
     fontSize: 12,
     color: '#666',
   },

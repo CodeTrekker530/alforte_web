@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import MapSvg from '../assets/map.svg'; // adjust path if needed
 
 const window = Dimensions.get('window');
 const drawerHeight = window.height * 0.6;
@@ -92,22 +93,33 @@ const closeAnim = Animated.timing(panY, {
       {/* Zoomable, scrollable image */}
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={styles.scrollContainer}
+        contentContainerStyle={{
+          width: window.width * 2,
+          height: window.height,
+        }}
         maximumZoomScale={4}
         minimumZoomScale={1}
+        bounces={false}
+        bouncesZoom={false}
         pinchGestureEnabled={true}
-        bouncesZoom={true}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
+        horizontal={true}
       >
-        <ScrollView horizontal contentContainerStyle={styles.scrollContainer}>
-          <Image
-            source={require('../assets/map.png')}
-            style={styles.image}
-            resizeMode="cover"
-          />
+        <ScrollView
+          contentContainerStyle={{
+            width: window.width * 4,
+            height: window.height,
+          }}
+          bounces={false}
+          bouncesZoom={false}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+        >
+          <MapSvg width={window.width * 2} height={window.height} />
         </ScrollView>
       </ScrollView>
+      
     <Animated.View style={[styles.headerCardContainer, { top: Animated.subtract(panY, 75) }]}>
     <View style={styles.headerCard}>
         <Image
