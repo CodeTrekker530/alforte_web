@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, FlatList } 
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { fetchProductAndServices } from '../backend/server';
-import { setSelectedItem } from '../utils/SelectionStore';
+import { useSelection } from '../context/SelectionContext'; 
 
 let debounceTimer;
 
@@ -13,6 +13,8 @@ export default function SearchScreen() {
   const [selectedFilter, setSelectedFilter] = useState('All');
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { setSelectedItem } = useSelection();
+
 
   const filters = ['All', 'Products', 'Stores', 'Services'];
 
@@ -100,10 +102,12 @@ export default function SearchScreen() {
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.itemRow}
-          onPress={() => {
-            setSelectedItem(item);
-            router.push('/map'); // continue navigation
-          }}
+            onPress={() => {
+              console.log('Tapped item:', item);
+              console.log('Node IDs:', item.node_id); // ✅ This will show node_ids in the console
+              setSelectedItem(item);
+              router.push('/map'); // continue navigation
+            }}
           >
             <Image source={imageMap[item.image]} style={styles.itemImage} />
             <View style={styles.itemInfo}>

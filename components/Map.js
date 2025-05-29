@@ -13,17 +13,15 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import MapSvg from '../assets/map.svg'; // adjust path if needed
-import { useSelectionStore } from '../utils/SelectionStore';
-
-const selectedItem = useSelectionStore(state => state.selectedItem);
-console.log('[Map.js] selectedItem:', selectedItem);
-
+import MapSVG from '../utils/MapSVG'; // or wherever you placed MapSVG.js
+import { useSelection } from '../context/SelectionContext'; 
 const window = Dimensions.get('window');
 const drawerHeight = window.height * 0.6;
 
 export default function HomeScreen() {
-  const router = useRouter();
+const { selectedItem } = useSelection();
+console.log('[Map.js] selectedItem:', selectedItem);
+const router = useRouter();
 const initialDrawerOffset = window.height - 150;
 const panY = useRef(new Animated.Value(initialDrawerOffset)).current;
 
@@ -97,32 +95,20 @@ const closeAnim = Animated.timing(panY, {
       {/* Zoomable, scrollable image */}
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={{
-          width: window.width * 2,
-          height: window.height,
-        }}
+        contentContainerStyle={{ flexGrow: 1 }}
         maximumZoomScale={4}
         minimumZoomScale={1}
         bounces={false}
-        bouncesZoom={false}
         pinchGestureEnabled={true}
-        showsHorizontalScrollIndicator={false}
+        horizontal
+        // Add vertical scrolling:
         showsVerticalScrollIndicator={false}
-        horizontal={true}
-      >
-        <ScrollView
-          contentContainerStyle={{
-            width: window.width * 4,
-            height: window.height,
-          }}
-          bounces={false}
-          bouncesZoom={false}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
         >
-          <MapSvg width={window.width * 2} height={window.height} />
-        </ScrollView>
+        <View style={styles.mapContainer}>
+          <MapSVG width={window.width * 3} height={window.height * 3} />
+        </View>
       </ScrollView>
+
       
     <Animated.View style={[styles.headerCardContainer, { top: Animated.subtract(panY, 75) }]}>
     <View style={styles.headerCard}>
@@ -201,6 +187,11 @@ const styles = StyleSheet.create({
   image: {
     width: window.width * 4,
     height: window.height * 1,
+  },
+  mapContainer: {
+  justifyContent: 'center',
+  alignItems: 'center',
+  flex: 1,
   },
   filterButton: {
     paddingHorizontal: 11,

@@ -1,6 +1,7 @@
 import { Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
 import SplashScreen from '../components/SplashScreen';
+import { SelectionProvider } from '../context/SelectionContext'; // adjust path
 
 export default function Layout() {
   const [showSplash, setShowSplash] = useState(true);
@@ -14,5 +15,9 @@ export default function Layout() {
     return <SplashScreen onFinish={() => setShowSplash(false)} />;
   }
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <SelectionProvider>
+      <Stack screenOptions={{ headerShown: false }} />
+    </SelectionProvider>
+  );
 }

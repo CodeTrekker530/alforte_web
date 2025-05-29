@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // For the search icon
 import { useRouter } from 'expo-router';
-import MapSvg from '../assets/map.svg'; // adjust path if needed
+import MapSVG from '../utils/MapSVG'; // or wherever you placed MapSVG.js
 
 
 const window = Dimensions.get('window');
@@ -56,31 +56,18 @@ export default function HomeScreen() {
       {/* Zoomable, scrollable image */}
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={{
-          width: window.width * 2,
-          height: window.height,
-        }}
+        contentContainerStyle={{ flexGrow: 1 }}
         maximumZoomScale={4}
         minimumZoomScale={1}
         bounces={false}
-        bouncesZoom={false}
         pinchGestureEnabled={true}
-        showsHorizontalScrollIndicator={false}
+        horizontal
+        // Add vertical scrolling:
         showsVerticalScrollIndicator={false}
-        horizontal={true}
-      >
-        <ScrollView
-          contentContainerStyle={{
-            width: window.width * 4,
-            height: window.height,
-          }}
-          bounces={false}
-          bouncesZoom={false}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
         >
-          <MapSvg width={window.width * 2} height={window.height} />
-        </ScrollView>
+        <View style={styles.mapContainer}>
+          <MapSVG width={window.width * 3} height={window.height * 3} />
+        </View>
       </ScrollView>
 
 
@@ -103,9 +90,10 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
   },
-  image: {
-    width: window.width * 4,
-    height: window.height * 1,
+  mapContainer: {
+  justifyContent: 'center',
+  alignItems: 'center',
+  flex: 1,
   },
   topOverlay: {
     position: 'absolute',
