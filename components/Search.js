@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
+import styles from '../assets/Styles/SearchStyles';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { fetchProductAndServices } from '../backend/server';
@@ -123,87 +124,3 @@ export default function SearchScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 60,
-    paddingHorizontal: 20,
-    backgroundColor: '#fff',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  headerText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginLeft: 10,
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#f1f1f1',
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    alignItems: 'center',
-  },
-  searchIcon: {
-    marginRight: 6,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 16,
-  },
-  filters: {
-    flexDirection: 'row',
-    marginTop: 16,
-    marginBottom: 10,
-    gap: 6,
-  },
-  filterButton: {
-    paddingVertical: 6,
-    paddingHorizontal: 14,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-  },
-  filterText: {
-    fontSize: 14,
-    color: '#333',
-  },
-  activeFilter: {
-    backgroundColor: '#2c6e49',
-    borderColor: '#2c6e49',
-  },
-  activeFilterText: {
-    color: '#fff',
-  },
-  itemRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 12,
-  },
-  itemImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 6,
-    marginRight: 12,
-  },
-  itemInfo: {
-    flex: 1,
-  },
-  itemName: {
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  itemCategory: {
-    fontSize: 12,
-    color: '#666',
-  },
-  itemPrice: {
-    fontWeight: '500',
-    fontSize: 13,
-    color: '#444',
-  },
-});
