@@ -2,6 +2,8 @@
 
 This is a module of PathSmart: Shopper Guide
 
+This app is designed to help users navigate a complex map layout, like finding products or stalls in a marketplace.
+
 App Includes:
 1. Map
 2. Search
