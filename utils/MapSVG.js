@@ -7,7 +7,6 @@ const DEFAULT_COLOR = '#D9D9D9';
 
 const MapSVG = () => {
   const { selectedItem } = useSelection();
-  // Handle single number or array for node_id
   const selectedIds = Array.isArray(selectedItem?.node_id)
     ? selectedItem.node_id.map(Number)
     : selectedItem?.node_id ? [Number(selectedItem.node_id)] : [];

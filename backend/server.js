@@ -3,7 +3,7 @@ import { supabase } from './supabaseClient.js';
 export async function fetchProductAndServices(searchTerm = '') {
   const searchLower = searchTerm.toLowerCase();
 
-  // 🟡 Step 1: Fetch matching products/services
+  // Fetch matching products/services
   const { data: products, error: productError } = await supabase
     .from('ProductandServices')
     .select('PnS_id, name, category')
@@ -16,7 +16,7 @@ export async function fetchProductAndServices(searchTerm = '') {
 
   const pnsIds = products.map(p => p.PnS_id);
 
-  // 🟠 Step 2: Fetch listings where PnS_id is in the above result
+  // Fetch listings where PnS_id is in the above result
   const { data: listings, error: listingError } = await supabase
     .from('listing')
     .select(`
@@ -31,7 +31,7 @@ export async function fetchProductAndServices(searchTerm = '') {
     console.error('Supabase Listing fetch error:', listingError.message);
   }
 
-  // 🔵 Map ProductandServices to their corresponding node_ids via listing
+  // Map ProductandServices to their corresponding node_ids via listing
     const productResults = (products || []).map(p => {
       const relatedListings = listings?.filter(l => l.PnS_id === p.PnS_id) || [];
       const node_ids = relatedListings.map(l => l.Stall?.node_id).filter(Boolean);
@@ -42,13 +42,13 @@ export async function fetchProductAndServices(searchTerm = '') {
         name: p.name,
         category: p.category,
         price: '--',
-        node_id: node_ids, // 🔧 Array of node_ids
+        node_id: node_ids, // Array of node_ids
         image: 'image.png',
       };
     });
 
 
-  // 🟢 Fetch filtered stalls
+  // Fetch filtered stalls
   const { data: stalls, error: stallError } = await supabase
     .from('Stall')
     .select('stall_id, stall_name, stall_category, node_id')
@@ -68,7 +68,7 @@ export async function fetchProductAndServices(searchTerm = '') {
     image: 'image.png',
   }));
 
-  console.log('✅ Combined Search Results with node_id:');
+  console.log('Combined Search Results with node_id:');
   [...productResults, ...stallResults].forEach(res =>
     console.log(`${res.type}: ${res.name}, node_id: ${res.node_id}`)
   );

@@ -35,12 +35,11 @@ export default function SearchScreen() {
     loadData();
   }, []);
 
-  // Dynamic search (debounced)
   useEffect(() => {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
       loadData(search);
-    }, 300); // delay to avoid frequent calls
+    }, 300); 
     return () => clearTimeout(debounceTimer);
   }, [search]);
 
@@ -105,9 +104,9 @@ export default function SearchScreen() {
             style={styles.itemRow}
             onPress={() => {
               console.log('Tapped item:', item);
-              console.log('Node IDs:', item.node_id); // ✅ This will show node_ids in the console
+              console.log('Node IDs:', item.node_id);
               setSelectedItem(item);
-              router.push('/map'); // continue navigation
+              router.push('/map'); 
             }}
           >
             <Image source={imageMap[item.image]} style={styles.itemImage} />

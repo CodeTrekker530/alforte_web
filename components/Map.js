@@ -13,7 +13,7 @@ import {
 import styles from '../assets/Styles/Maps';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import MapSVG from '../utils/MapSVG'; // or wherever you placed MapSVG.js
+import MapSVG from '../utils/MapSVG';
 import { useSelection } from '../context/SelectionContext'; 
 const window = Dimensions.get('window');
 const drawerHeight = window.height * 0.6;
@@ -101,7 +101,6 @@ const closeAnim = Animated.timing(panY, {
         bounces={false}
         pinchGestureEnabled={true}
         horizontal
-        // Add vertical scrolling:
         showsVerticalScrollIndicator={false}
         >
         <View style={styles.mapContainer}>
