@@ -1,5 +1,5 @@
 {
-  "name": "alforte_mobile",
+  "name": "alforte_web",
   "version": "1.0.0",
   "main": "expo-router/entry",
   "scripts": {

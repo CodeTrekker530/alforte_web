@@ -125,7 +125,7 @@ export default StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    height: drawerHeight,
+    height: 500,
     backgroundColor: '#0766AD',
     borderRadius: 10,
     borderWidth: 1,
