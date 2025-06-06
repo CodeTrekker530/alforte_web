@@ -107,67 +107,6 @@ const closeAnim = Animated.timing(panY, {
           <MapSVG width={window.width * 3} height={window.height * 3} />
         </View>
       </ScrollView>
-
-      
-    <Animated.View style={[styles.headerCardContainer, { top: Animated.subtract(panY, 75) }]}>
-    <View style={styles.headerCard}>
-        <Image
-        source={require('../assets/banana.jpg')}
-        style={styles.headerImage}
-        />
-        <View style={styles.headerInfo}>
-        <Text style={styles.headerTitle}>Banana (Lakatan)</Text>
-        <Text style={styles.headerSubtitle}>Ground Floor, 3rd Floor</Text>
-        </View>
-        <Text style={styles.headerPrice}>SRP: ₱95/kg</Text>
-    </View>
-    </Animated.View>
-      {/* Bottom Drawer */}
-    <Animated.View style={[styles.drawerContainer, { top: panY }]} {...panResponder.panHandlers}>
-    <View style={styles.drawerHandle} />
-
-    <View style={styles.drawerContent}>
-      {/* Title */}
-      <View style={styles.titleBox}>
-        <Text style={styles.titleText}>Quality Guide</Text>
-      </View>
-
-      {/* Carousel */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.carouselContainer}
-        contentContainerStyle={styles.carouselContent}
-      >
-        <Image
-          source={require('../assets/banana.jpg')}
-          style={styles.carouselImage}
-        />
-        <Image
-          source={require('../assets/banana2.webp')}
-          style={styles.carouselImage}
-        />
-      </ScrollView>
-
-      {/* Quality List */}
-      <View style={styles.qualityList}>
-        <Text style={styles.qualityItem}>
-          <Text style={styles.qualityLabel}>Color: </Text>
-          Bright yellow with slight green tips.
-        </Text>
-        <Text style={styles.qualityItem}>
-          <Text style={styles.qualityLabel}>Texture: </Text>
-          Firm but not hard; smooth skin.
-        </Text>
-        <Text style={styles.qualityItem}>
-          <Text style={styles.qualityLabel}>Smell: </Text>
-          Sweet and mild banana fragrance.
-        </Text>
-      </View>
-    </View>
-    </Animated.View>
-
-
     </View>
   );
 }

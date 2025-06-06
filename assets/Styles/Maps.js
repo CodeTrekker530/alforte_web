@@ -1,33 +1,41 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 
 const window = Dimensions.get('window');
-const drawerHeight = 300; // You can set this based on your requirements
+const isWeb = Platform.OS === 'web';
+const contentWidth = isWeb ? Math.min(window.width * 0.95, 1200) : window.width;
+const imageScaleFactor = isWeb ? 2 : 4;
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    top: 49,
+    top: isWeb ? 0 : 49,
+    alignItems: 'center',
+    marginLeft: 300 ,
+    marginRight: 300,
+    backgroundColor: '#fff'
+
   },
   scrollView: {
     flex: 1,
+    width: contentWidth,
   },
   scrollContainer: {
     flexGrow: 1,
   },
   image: {
-    width: window.width * 4,
-    height: window.height * 1,
+    width: window.width * imageScaleFactor,
+    height: window.height,
   },
   mapContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
+    width: contentWidth,
   },
   topOverlay: {
     position: 'absolute',
-    top: 10,
-    left: 10,
-    right: 10,
+    top: 20,
+    width: 900,
     zIndex: 1,
     flexDirection: 'row',
     alignItems: 'center',
@@ -52,6 +60,7 @@ export default StyleSheet.create({
     borderRadius: 5,
     borderColor: '#fff',
     borderWidth: 1,
+    flex: 1,
   },
   logo: {
     width: 40,
@@ -69,8 +78,8 @@ export default StyleSheet.create({
   },
   floatingButtons: {
     position: 'absolute',
-    top: 80,
-    right: 10,
+    top: 100,
+    right: 20,
     zIndex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -111,132 +120,5 @@ export default StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 3,
-  },
-  filterButton: {
-    paddingHorizontal: 11,
-    paddingVertical: 11,
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 8,
-    marginRight: 5,
-  },
-  drawerContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    height: 500,
-    backgroundColor: '#0766AD',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#000',
-    paddingTop: 10,
-    alignItems: 'center',
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-  },
-  drawerHandle: {
-    width: 115,
-    height: 4,
-    borderRadius: 3,
-    backgroundColor: '#EAEAEA',
-    marginBottom: 10,
-  },
-  drawerContent: {
-    width: '100%',
-    paddingHorizontal: 20,
-    paddingTop: 10,
-    alignItems: 'center',
-  },
-  titleBox: {
-    borderWidth: 2,
-    borderColor: '#fff',
-    borderRadius: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    backgroundColor: '#ffffff',
-    alignItems: 'center',
-  },
-  titleText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#000',
-  },
-  headerCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#0766AD',
-    marginHorizontal: 0,
-    marginBottom: 10,
-    padding: 10,
-    borderRadius: 10,
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-  },
-  headerImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 10,
-    marginRight: 10,
-  },
-  headerInfo: {
-    flex: 1,
-  },
-  headerTitle: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  headerSubtitle: {
-    color: '#d3e7ff',
-    fontSize: 13,
-  },
-  headerPrice: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 14,
-  },
-  headerCardContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    zIndex: 5,
-  },
-  carouselContainer: {
-    marginTop: 15,
-    height: 190,
-  },
-  carouselContent: {
-    paddingHorizontal: 10,
-  },
-  carouselImage: {
-    width: 280,
-    height: 190,
-    borderRadius: 10,
-    marginRight: 10,
-    borderWidth: 1,
-    borderColor: '#fff',
-  },
-  qualityList: {
-    marginTop: 20,
-    width: '100%',
-  },
-  qualityItem: {
-    fontSize: 15,
-    color: '#000',
-    marginBottom: 10,
-    backgroundColor: '#fff',
-    padding: 5,
-    borderRadius: 5,
-  },
-  qualityLabel: {
-    fontWeight: 'bold',
-    color: '#000',
   },
 });

@@ -3,9 +3,11 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 60,
-    paddingHorizontal: 20,
+    paddingTop: 30,
+    paddingHorizontal: 40,
     backgroundColor: '#fff',
+    marginLeft: 300 ,
+    marginRight: 300,
   },
   header: {
     flexDirection: 'row',
@@ -82,5 +84,6 @@ export default StyleSheet.create({
     fontWeight: '500',
     fontSize: 13,
     color: '#444',
+    marginRight: 20,
   },
 });
