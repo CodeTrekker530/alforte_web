@@ -9,7 +9,7 @@ import {
   Image,
   TouchableOpacity
 } from 'react-native';
-import { FontAwesome, Feather } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
 
@@ -45,7 +45,7 @@ const router = useRouter();
             placeholderTextColor="#888"
           />
         <TouchableOpacity onPress={() => router.push('/Search')}>
-            <Feather name="search" size={18} color="#888" style={styles.searchIcon} />
+          <Ionicons name="search" size={24} color="black" />
         </TouchableOpacity>
         </View>
       </View>
@@ -122,10 +122,6 @@ searchContainer: {
     paddingVertical: 4,
     fontSize: 14,
   },
-  searchIcon: {
-    marginLeft: 8,
-  },
-
   container: {
     paddingHorizontal: isWeb ? 40 : 20,
     paddingVertical: 40,
